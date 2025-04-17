@@ -9,6 +9,16 @@ export  function Greeting(props){
     return <h1>Hello, {props.name}</h1>
 }
 
-export  function Farewell(props){
-    return <h1>Goodbye, {props.name}</h1>
+export  function Farewell(props={}){
+    //props={} 의 뜻은
+    //값이 안들어오면 오른쪽을 사용, 값이 들어오면 왼쪽 사용이다.
+
+    //props로 들어올때 초기값을 주려면.
+        //1. props를 빈객체를 받게 해놓고.
+        //2. 기본값을 표기해준다.
+            //구조분해 할당에서 =은 대입연산자의 역할이 아니라 
+            // 기본값을 표기하는 역활
+    const {name="홍길동"} = props; 
+
+    return <h1>Goodbye, {name}</h1>
 }
