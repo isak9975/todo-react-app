@@ -72,7 +72,8 @@ import {Button, Grid,TextField} from '@mui/material'
             onButtonClick();
         }
     }
-    
+
+   
 
     return(
         //contianer
@@ -82,6 +83,9 @@ import {Button, Grid,TextField} from '@mui/material'
             value={item.title} onChange={onInPutChange}
             onKeyDown={enterKeyEventHandler}
             />
+        </Grid>
+        <Grid>
+            <Button onClick={onButtonClick} fullWidth style={{height:'100%', marginRight:20}} color="secondary" variant="outlined">+</Button>
         </Grid>
         <Grid>
             <Button onClick={onButtonClick} fullWidth style={{height:'100%'}} color="secondary" variant="outlined">+</Button>

@@ -15,25 +15,52 @@ import AddTodo from './AddTodo.js';
 
 
 function App() {
-  //하나의 할 일을 객체로 관리할 것이다.
+  //하나의 할 일 을 객체로 관리할 것이다.
   //id, title, done => 하나로 묶어 객체로 관리
+  //사용자에게 보여줄 Todo한줄의 모음 = items
   const [items,setItems] = useState([])
-
   
+
+    //(1)
     //Todo를 추가하기 위한 백엔드 콜을 대신할 가짜 함수를 만들어보자.
     const add = (item) => {
         //newItem 객체가 하나의 Todo
         const newItem = {
-            ...item,
+            ...item, //item = title:"값"
             id:"ID-"+item.length,
             // done:false
-        }
-
+        }//newItem = title:"값",id:ID-"번호"
+        
         //상태를 변화시키는 함수를 호출하면 state의 변경사항이 화면에 적용이 된다.
         //화살표 함수로 기존의내용(prev) 위에 추가하는거. => 기존내용 + newItem
         setItems(prev=>[...prev,newItem])
         console.log("items : ",[...items, newItem])
     }
+
+    //(2)
+    //삭제를 해주는 deleteitem() 함수 만들기
+    //delete from 테이블 where id=''
+    //useState(), 기능을 하는 함수를 App.j에 만든 이유
+    //전체 Todo 리스트는 App.js에서 관리를 하기 때문에
+    const deleteItem = (item) => {
+    //배열에서 삭제하려고 하는 아이템을 찾는다.
+    const newItems = items.filter(e=>e.id!== item.id);
+    //삭제할 아이템을 제외한 아이템을 다시 배열에 지정한다..
+    setItems([...newItems]);
+    }
+
+
+    //(3)
+    //Todo의 수정
+    const editiItem = () =>{
+      setItems = ([...items]); // ->이게 재 렌더링 해줌
+    }
+
+
+    //item = title:"값"
+    //newItem = title:"값",id:ID-"번호"
+    //Items = [{title:"값1",id:ID-"번호"},
+    //                title:"값2",id:ID-"번호"]
 
 
 //react는 key속성에 들어잇는 값을 참고해서, 리스트의 요소가 변경될 경우
@@ -48,12 +75,15 @@ const todoItems = items.length > 0 &&
 <Paper style={{margin: 16}}>
   <List>{/* 일련의 항목을 세로로 나열하는 컨테이너 역활 */}
     {items.map((item) => (
-      <Todo item={item} key={item.id} />
+      <Todo item={item} key={item.id} deleteItem={deleteItem} editiItem={editiItem} />
     ))}
   </List>
 </Paper>
 
 //item.map(items => <Todo item={items} key={items.id} />)
+
+
+
 
 
   return (
@@ -62,9 +92,8 @@ const todoItems = items.length > 0 &&
     
         {/* Todo로 item객체를 전달. */}
         <AddTodo add={add}/>   {/* AddTodo에 add함수를 전달 */}
-        
-        {todoItems}
-        
+        {/* <Todo deleteItem={deleteItem}/> */}
+        {todoItems}        
         
       {/* </header> */}
       </Container>
