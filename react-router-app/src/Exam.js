@@ -48,9 +48,19 @@ const Categories = () =>{
     return(
         <div>
             <h2> 카테고리를 선택하세요</h2>
+            {/* 리스트로 만들고 URL로 이동할 수 있는 링크를 생성함
+            key에 고유한 값이 들어가는건 맞음.
+            li의 값이 변경될 때 react가 구분을 하는 값으로 인식.
+            key : 리액트가 리스트를 구분할 수 있는 식별자로 사용함. 
+            리액트에게 진짜 변한부분만 재조정할수 있게 하여 성능 향상하기 위함.
+            
+            key 
+            형제 요소내에서 순서가 바뀌거나, 값이 추가되거나, 삭제되거나 할때 리액트는
+            바뀌지 않은 요소에 대해서는 굳이 재렌더링을 하지 않는다. 그걸 key를 통해 할수 있다.*/}
             <ul>
                 {categories.map(cate=>(
-                    <li><Link to={`/categories/${cate.id}`}>{cate.name}</Link></li>
+                    <li key={cate.id}
+                    ><Link to={`/categories/${cate.id}`}>{cate.name}</Link></li>
                 ))}
             </ul>
         </div>
@@ -73,7 +83,7 @@ const Products = () =>{
         <div>
             <h2>상품을 선택하세요</h2>
             <ul>
-                {products.filter(x=>x.categoryId==categoriId).map(pro=>(
+                {products.filter(x=>x.categoryId===categoriId).map(pro=>(
                     <li>
                       <Link to={`/categories/${pro.categoryId}/products/${pro.id}`}>{pro.id},{pro.name}</Link>  
                     </li>
@@ -97,6 +107,9 @@ const ProductDetail = () =>{
         { id: 6, name: '우유', description: '신선한 우유입니다.', categoryId: '3' },
         ];
 
+        //filter -> 원하는 조건이 없을 때 빈배열을 반환
+        //find -> 못찾으면 undefined
+        //const product = p_detail.find(item=>item.id===Number(productId)&&i)
     return(
         <div>
             <h1>상세페이지</h1>
