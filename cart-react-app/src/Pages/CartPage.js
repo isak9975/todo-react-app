@@ -2,6 +2,14 @@ import { useContext } from "react"
 import { CartContext } from "../context/CartContext"
 
 const CartPage = () => {
+
+    //장바구니 페이지
+    //장바구니 state에 아무것도 들어있지 않으면 "장바구니가 비어있습니다"
+    //state에 들어있는 목록을 리스트화
+    //제품이름 - 단가
+    //개수를 조절하는 input
+    //삭제하기 버튼
+    //장바구니 비우기 버튼
     const {items,removeItem,updateQantity,clearCart} = useContext(CartContext);
 
     return(

@@ -2,6 +2,7 @@ import { useContext } from "react";
 import {Link} from 'react-router-dom'
 import { CartContext } from "../context/CartContext";
 
+//제품목록으로 가는 링크, 카트페이지로 가는 링크(제품의 총 개수 - 총 가격)
 const Header = () => {
     const {items} = useContext(CartContext);
     //총 개수
