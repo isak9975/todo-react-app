@@ -87,9 +87,7 @@ import {Button, Grid,TextField} from '@mui/material'
         <Grid>
             <Button onClick={onButtonClick} fullWidth style={{height:'100%', marginRight:20}} color="secondary" variant="outlined">+</Button>
         </Grid>
-        <Grid>
-            <Button onClick={onButtonClick} fullWidth style={{height:'100%'}} color="secondary" variant="outlined">+</Button>
-        </Grid>
+
     </Grid>
     )
 }

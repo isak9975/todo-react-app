@@ -4,9 +4,11 @@ import './App.css';
 import Todo from './Todo';
 import Example from './Example.js';
 import { Farewell } from './Greetings.js';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import {Container,List, Paper} from '@mui/material'
 import AddTodo from './AddTodo.js';
+import axios from 'axios'
+import { call } from './service/APIService.js';
 
 //Container
 //레이아웃의 가로폭을 제한하고, 중앙 정렬 및 기본 패딩을 자동으로 적용해주는 컴포넌트
@@ -19,41 +21,41 @@ function App() {
   //id, title, done => 하나로 묶어 객체로 관리
   //사용자에게 보여줄 Todo한줄의 모음 = items
   const [items,setItems] = useState([])
-  
 
-    //(1)
-    //Todo를 추가하기 위한 백엔드 콜을 대신할 가짜 함수를 만들어보자.
+useEffect(()=>{
+  //우리의 백엔드 url을 적어서 요청
+  //조회
+  call("/todo","GET")
+    .then(result => {setItems(result.data)})    
+},[]) 
+
+    //(1)Create
     const add = (item) => {
-        //newItem 객체가 하나의 Todo
-        const newItem = {
-            ...item, //item = title:"값"
-            id:"ID-"+item.length,
-            // done:false
-        }//newItem = title:"값",id:ID-"번호"
-        
-        //상태를 변화시키는 함수를 호출하면 state의 변경사항이 화면에 적용이 된다.
-        //화살표 함수로 기존의내용(prev) 위에 추가하는거. => 기존내용 + newItem
-        setItems(prev=>[...prev,newItem])
-        console.log("items : ",[...items, newItem])
+        //데이터베이스에 추가하기 위해 백엔드로 데이터를 전달
+        call("/todo","POST",item)
+        //데이터를 추가하고, 전체 데이터를 반환받아서 state에 세팅을 하여 
+        //다시 렌더링이 일어남
+          .then(result => {setItems(result.data)})
+
+          
     }
 
-    //(2)
+    //(2)Delete
     //삭제를 해주는 deleteitem() 함수 만들기
     //delete from 테이블 where id=''
     //useState(), 기능을 하는 함수를 App.j에 만든 이유
     //전체 Todo 리스트는 App.js에서 관리를 하기 때문에
     const deleteItem = (item) => {
-    //배열에서 삭제하려고 하는 아이템을 찾는다.
-    const newItems = items.filter(e=>e.id!== item.id);
-    //삭제할 아이템을 제외한 아이템을 다시 배열에 지정한다..
-    setItems([...newItems]);
+      call("/todo","DELETE",item)
+        .then(result => {setItems(result.data)})
     }
 
 
-    //(3)
+    //(3)Update
     //Todo의 수정
-    const editiItem = () =>{
-      setItems = ([...items]); // ->이게 재 렌더링 해줌
+    const editiItem = (item) =>{
+      call("/todo","PUT",item)
+        .then(result => setItems(result.data))
     }
 
 

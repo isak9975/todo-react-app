@@ -7,8 +7,10 @@ import {Provider,useDispatch,useSelector}from 'react-redux'
 
 const TodoList = () => {
 
+  //리덕스에 저장된 state를 가져와서 컴포넌트에서 쓰게 해주는것.
   const todos = useSelector((state)=>state.todos)
 
+  //나중에 사용할 디스패치 선언해주고
   const dispatch = useDispatch()
   
   const[input,setInput] = useState("")
@@ -16,7 +18,9 @@ const TodoList = () => {
 
 
   const handleAddTodo = () => {
-    if(input.trim().length!=""){
+    if(input.trim().length != ""){
+      //디스패치 - 스토어에서 제공하는 함수
+        //액션을 발생 -> 리듀서가 상태를 업데이트 하도록 한다.
       dispatch(addTodo(Date.now(),input))
       setInput(" ")
     }

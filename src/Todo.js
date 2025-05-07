@@ -53,22 +53,22 @@ let Todo = (props) => {
     //     })
     // }
     const turnOnReadOnly = (e) =>{
-        if(e.key=='Enter'){
-            setReadOnly(true);
+        if(e.key=='Enter' && readOnly===false){
+            setReadOnly(true); //readOnly true가 읽기만 허용.
+            editiItem(item);
         }
     }
 
       //체크박스 변경함수 
     const checkBoxEventHandler = (e) => {
         item.done = e.target.checked
-        editiItem();
+        editiItem(item);
     }
 
    
-
+    //내용물을 변경할때(onChange)
     const editEventHandler = (e) =>{
-         item.title = e.target.value;
-        editiItem();
+        setItem({...item,title:e.target.value})
     }
 
 
