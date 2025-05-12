@@ -21,6 +21,8 @@ export function call(api,method,request){
     }
 
     //앞서 설정한 options 객체를 사용하여 axios로 HTTP요청을 보낸다.
+    //call 메서드의 호출 결과는 결국 Promise이기 때문에 .then을 이어서 쓸 수 있다.
+    
     return axios(options)
         //요청이 성공적으로 처리된 경우 실행되는 코드이다.
         .then(response => {
@@ -28,9 +30,23 @@ export function call(api,method,request){
             return response.data;
         })
         .catch(error =>{
+            if(error.status === 403){
+                console.log("에러코드 : ",error.status);
+                //403코드면 로그인 path로 가라
+                window.location.href="/login";
+            }
+            
             const m_error = error;
             return m_error;
         })
 
+}
+
+export function signin(userDTO){
+    return call("/auth/signin","POST",userDTO)
+            .then(response=>{
+                console.log("response : " + response);
+                alert("로그인 토큰 : " + response.token);
+            })
 }
 

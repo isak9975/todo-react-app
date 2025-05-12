@@ -26,7 +26,21 @@ useEffect(()=>{
   //우리의 백엔드 url을 적어서 요청
   //조회
   call("/todo","GET")
-    .then(result => {setItems(result.data)})    
+    .then(result => {
+      if(result&&result.data){
+        setItems(result.data)
+      }
+      else{
+        console.log("result.data=null")
+        setItems([])
+      }
+
+    })   
+    .catch(error=>{
+      console.log("정보를 가져올 수 없음",error);
+      setItems([]);
+    }) 
+
 },[]) 
 
     //(1)Create
@@ -56,6 +70,7 @@ useEffect(()=>{
     const editiItem = (item) =>{
       call("/todo","PUT",item)
         .then(result => setItems(result.data))
+        
     }
 
 

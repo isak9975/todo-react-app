@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import AppRouter from './AppRouter';
 // import Todo from './Todo';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     {/* <Todo /> */}
-    <App />
+    <AppRouter tab="home" />
     
   </React.StrictMode>
 
