@@ -79,7 +79,7 @@ let Todo = (props) => {
         //class -> className
         // <div className = "Todo">
         <ListItem>
-            <Checkbox checked={checkBoxEventHandler}/>
+            <Checkbox  onClick={checkBoxEventHandler} />
             <ListItemText>
                 <InputBase
                     inputProps={{"aria-label" : "naked", "readOnly": readOnly}}

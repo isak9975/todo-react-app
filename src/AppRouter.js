@@ -2,6 +2,7 @@ import App from './App';
 import { Login } from './Login';
 import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import {Typography,Box} from '@mui/material';
+import { Signup } from './Signup';
 
 const Copyright = () => {
     return(
@@ -25,6 +26,7 @@ const AppRouter = () => {
                 <Routes>
                     <Route path='/' element={<App />}/>
                     <Route path="/login" element={<Login/>}/>
+                    <Route path='/signup' element={<Signup/>}/>
                 </Routes>
             </BrowserRouter>
             <Box mt={5}>
