@@ -6,11 +6,16 @@ import  {ThemeProvider}  from './ThemeContext';
 import  {ThemeSwitch}  from './ThemeSwitch';
 import { Header } from './Header';
 
+
 function App() {
+
+  //Cannot read properties of null (reading 'useRef')
+  //Cannot read properties of null (reading 'useContext')
 
   return(
   <div>
     <Header/>
+
     
     <h2>App JS On</h2>
       

@@ -1,0 +1,16 @@
+.container{
+    height: 50vh;
+    color:blue;
+    border:5px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+};
+
+table{
+    color: blue;
+    size: 24px;
+    text-align: center;
+    background-color: #000000;
+}
