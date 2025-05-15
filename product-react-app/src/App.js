@@ -16,11 +16,6 @@ function App() {
         <hr style={{border:"2px solid black", margin:0,padding:0}}/>
         {/* <Link to='/create'>제품 입력</Link> / 
         <Link to='/'>완료</Link> */}
-
-        <Routes>
-          <Route path='/find' element={<Find/>}/>
-          <Route path='/create' element={<Create />}/>
-        </Routes>
         
         <Find />
         

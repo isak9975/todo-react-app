@@ -28,6 +28,7 @@ export const Find = () => {
             })
     },[])
 
+    //버튼을 누를때 마다 open의 상태를 변화시키겠다.
     const onButtonClick = () => {
         setOpen(!open);
     }
@@ -38,6 +39,7 @@ export const Find = () => {
 
     let addProduct = Create;
 
+    //열림 버튼이 눌렸을때 open이 false일때 아래 항목을 보여주겠다.
     if(!open){
         addProduct = addproductScreen;
     }
@@ -51,14 +53,17 @@ export const Find = () => {
     }
 
     //클릭한 라디오 버튼의 index
+        //index를 사용해서 라디오 버튼의 눌림을 체크하기 위함.
     const handleRadioChange = (index) => {
         setSeletedIndex(index);
     }
 
+    //입력된 orderCount의 value를 인식하여 바로바로 세팅 및 업데이트 하기.
     const handleOrderCountChange = (e) => {
         setOrderCount(e.target.value)
     }
 
+    //axios와 소통하여 값 작성하기.
     const orderProduct = () =>{
         console.log("orderProduct Run")
         console.log(selectedIndex)
@@ -103,6 +108,12 @@ export const Find = () => {
                         handleRadioChange(index+1)
                     }}/></td>
 
+
+                    {/* value값을 orderCount에 직접 넣어 변경하는게 아니라
+                        onChange에서 변경감지하여 순간 value값을 읽어 
+                        setOrderCount를 수정하고 그걸 다시 value에 넣는것.
+
+                        우리가 직접 수정하고 있다고 해서 혼동할 수 있지만 정작 그렇지 않았다. */}
                     <td><input onChange={handleOrderCountChange} readOnly={selectedIndex !== index+1} 
                     type="number" name="productCount" value={selectedIndex===index+1?orderCount:""}/></td>
 
