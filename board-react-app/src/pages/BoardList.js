@@ -5,35 +5,66 @@ import '../css/BoardList.css'
 import { useState,useContext,useEffect } from "react"
 import { BoardContext } from "../context/BoardContext";
 import { Link, Navigate, replace, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const BoardList = () => {
 
     const {boardList,setBoardList} = useContext(BoardContext);
-
+    
     const [currentPage,setCurrentPage] = useState(1); //현재 페이지
     const [postsPerPage,setPostPerPage] = useState(3); //한 페이지 보여줄 게시물 개수
     const [totalPages, setTotalPages] = useState(1); //총 페이지 수
 
+    const [loading,setLoading] = useState(true);
+
     const navigate = useNavigate();
 
+    const apiConect = async(e) =>{
+        try {
+            const response = await axios.get("http://localhost:10000/api/board")
+
+            setBoardList(response.data.data)
+            // .then(res=>{console.log(res.data.data) 
+            //         if(res.data===null){
+            //         setBoardList([])
+            //     }
+            //     else{
+            //         setBoardList(res.data.data)
+            //     }
+            // })
+        } catch (error) {
+            console.log(error)            
+            setBoardList([]);
+        } finally{
+            setLoading(false)
+        }
+
+    }
+
+
     useEffect(()=>{
+
+        apiConect();     
+
+
         //백엔드와 통신하는 척 boardList에 가짜데이터를 넣는다.
         // setBoardList(mockData);
         //게시판의 총 페이지 수
         setTotalPages(Math.ceil(boardList.length/postsPerPage));
         //게시글 개수와, 총 페이지 수가 변할 때마다 재 렌더링
         setCurrentPage(1);
+        
     },[postsPerPage,boardList.length])
-
+    // 
 
     //페이지 계산
     //현재 페이지의 마지막 게시글 인덱스 +1을 구한다.
         //ex) 현재페이지 : 2, 한페이지에 보여줄 게시글 3
-    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfLastPost = currentPage * postsPerPage
 
     //현재 페이지의 첫번째 게시물의 인덱스
         //ex) 6-3 = 3
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage
 
     //indexOfFirstPostt 부터 indexOfLastPost 미만까지 잘라낸다.
     const cuurentPosts = boardList.slice(indexOfFirstPost,indexOfLastPost)
@@ -50,6 +81,15 @@ export const BoardList = () => {
         return navigate('/write')
         // return window.location.href='/write'
     }
+
+    if(loading){
+        return(
+            <div>
+                <h2>로딩중......</h2>
+            </div>
+        )
+    }
+
 
     return(
         <div className="board-container" style={{textAlign:"center", display:"flex",flexDirection:"column", width:"90vh", border:"1px solid black"}}>
@@ -79,10 +119,13 @@ export const BoardList = () => {
             <div> 
                 <ul className='board-posts'>
                 {/* 보여주기 */}
-                        {cuurentPosts.map((board)=>(
+
+                {boardList.length <= 0?<h1>게시글이 없습니다</h1>:
+                
+                cuurentPosts.map((board)=>(
                             <li style={{cursor:"pointer"}} 
 
-                            onClick={()=>{window.location.href=`/post/${board.id}`}} 
+                            onClick={()=>{navigate(`/post/${board.id}`)}} 
                             key={board.id} className="board-post-item">
 
                                 <Link to={`/post/${board.id}`}>{board.title}</Link>    

@@ -7,7 +7,8 @@ export const BoardProvider = ({children}) => {
 
     useEffect(()=>{},[])
 
-    const [boardList,setBoardList] = useState(mockData);
+    //mockData를 초기 값으로 지정
+    const [boardList,setBoardList] = useState([]);
 
     return(
         <div>
