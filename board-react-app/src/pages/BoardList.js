@@ -135,10 +135,11 @@ export const BoardList = () => {
                                 <span>|작성 시간 : {board.writingTime}</span>
 
                             </li>
-                        ))}
+                        )).reverse()  }
+                
                 </ul>
             </div>
-
+            {/* .reverse()를 사용해서 최근에 작성한 글이 가장 처음에 나오게 할수도 있다.  */}
 
            
 

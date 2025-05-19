@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { BoardContext } from "../context/BoardContext";
 import { useParams,useNavigate } from "react-router-dom";
 import { CustomButton } from "../component/CustomButton";
-import axios from "axios";
+import axios, { Axios } from "axios";
 
 export const PostDetail = () => {
 
@@ -17,45 +17,72 @@ const id = useParams();
 
 const navigate = useNavigate();
 
+//강사님 코드
+// const getBoard = async () => {
+//     const response = await axios({
+//         url:`http://localhost:10000/api/board/${id.id}`,
+//         method:"GET"
+//     });
+//     setItem(response.data.data)
+//     console.log(response.data.data);
+// }
+
 //id를 통해 boardList에 들어있는 게시글 한건을 꺼내서 화면에 출력하기
 //useEffect() 사용하기
 
 useEffect(()=>{
 
-  //게시글 배열에서, 넘어온 id와 일치하는 게시글을 한 건 찾아서 변수에 담는다.
-  const post = boardList.find((it)=>it.id === parseInt(id.id));
 
-  if(post){
-    setItem(post)
-  }else{
-    alert("id를 찾을 수 없습니다")
-  }
+  axios.get(`http://localhost:10000/api/board/${id.id}`)
+    .then(res=>{
+        // console.log(res.data.data[0])
+        setItem(res.data.data[0])
+    })
+    .catch(error=>console.error(error))
+
+  //게시글 배열에서, 넘어온 id와 일치하는 게시글을 한 건 찾아서 변수에 담는다.
+//   const post = boardList.find((it)=>it.id === parseInt(id.id));
+ 
+    // console.log(post)
+
+//   if(post){
+//     setItem(post)
+//   }else{
+//     alert("id를 찾을 수 없습니다")
+//   }
 
 //   setItem(boardList[id.id-1])
 
 },[])
 
-console.log(id.id)
-console.log(item)
 
 const moveToEdit = () => {
     navigate(`/edit/${id.id}`)
 }
 
+//게시글 삭제하기
 const handleDelete = () => {
+    //백엔드에 삭제를 요청
+    //응답으로 true또는 false를 받아오기
+    //true일 때 삭제 되었습니다 alert 띄우기
 
-    console.log(id.id)
+    if(window.confirm("게시글을 삭제하시겠습니까?")){
 
-    alert(`${id.id}번 게시물 삭제 성공`)
+        axios.delete('http://localhost:10000/api/board/'+id.id)
+            .then(res => {
+                if(res.data){
+                    alert(`${id.id}번 게시물 삭제 성공`)
+                    navigate("/")
+                }else{
+                    alert(`${id.id}번 게시물 삭제 실패`)
+                }
+            })
+        }
 
-    axios.delete('http://localhost:10000/api/board/'+id.id)
-        .then(res => console.log(res))
+    // console.log(boardList[id.id-1].id===parseInt(id.id))
+    // console.log(boardList.filter((board)=>board.id!==parseInt(id.id)))
+    // setBoardList(boardList.filter((board)=>board.id!==parseInt(id.id)))   
 
-    console.log(boardList[id.id-1].id===parseInt(id.id))
-    console.log(boardList.filter((board)=>board.id!==parseInt(id.id)))
-    setBoardList(boardList.filter((board)=>board.id!==parseInt(id.id)))   
-
-    navigate("/")
 }
 
 

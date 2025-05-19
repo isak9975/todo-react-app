@@ -22,16 +22,20 @@ export const EditPost = () => {
     // const {title1,author1,content1} = post;
 
     const apiConect = async(e) =>{
-        const response = await axios.get("http://localhost:10000/api/board")
-        console.log(response.data.data.find(board=>board.id===parseInt(id.id)))
-        setPost(response.data.data.find(board=>board.id===parseInt(id.id)))
-        console.log(post)
+        const response = await axios.get(`http://localhost:10000/api/board/${id.id}`)
 
-        setTitle(post.title)
+        console.log(response.data.data[0])
+
+        // console.log(response.data.data.find(board=>board.id===parseInt(id.id)))
+        setPost(response.data.data[0])
+
         
-        setAuthor(post.author)
+        setTitle(response.data.data[0].title)
+        setAuthor(response.data.data[0].author)
+        setContent(response.data.data[0].content)
+
+        console.log(post)
         console.log(author)
-        setContent(post.content)
         console.log(content)
     }
 
