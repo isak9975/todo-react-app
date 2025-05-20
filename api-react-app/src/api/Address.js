@@ -1,7 +1,7 @@
+import axios, {Axios} from 'axios'
 import {useEffect,useState} from 'react'
 import {Navigate} from 'react-router-dom'
 import {DaumPostcodeEmbed,loadPostcode,useDaumPostcodePopup} from 'react-daum-postcode'
-import {axios} from 'axios'
 
 export const Address = () => {
     const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
@@ -10,6 +10,10 @@ export const Address = () => {
     const [postcode,setPost] = useState(''); //우편번호를 저장하는 state
     const [address,setAddress] = useState(''); //주소를 저장할 state
     const [extraAddress,setExtraAddress] = useState('') //참고 항목을 저장할 state
+    
+    const[swit,setSwit] = useState(false);
+    const[showinfo,setShowinfo] = useState("");
+    const[item,setItem] = useState([]);
 
     //훅을 사용하여 주소찾기 API를 팝업으로 실행할 준비
     const open = useDaumPostcodePopup(scriptUrl);
@@ -76,16 +80,49 @@ export const Address = () => {
     }
 
     const handlesave = () => {
-        
+
+        let user={userId: postcode ,userPassword: postcode ,userEmail: postcode ,userAddress : postcode+address}
+
+        axios.post("http://localhost:10000/address",user)
+        .then(res=>{
+            console.log(res.data.data)
+            setItem(res.data.data)
+        })
+
+        handlebutton();
+
     }
 
-    const showinfo = () => {
-        return (
+    const handlebutton = () => {
+        // console.log("run")
+        // console.log(swit)
+
+        setSwit(!swit)
+
+        if(!swit){
+            setShowinfo(printinfo);
+        }
+        else{
+            setShowinfo('');
+        }
+    }
+
+    
+
+    const printinfo = (
+       
             <div>
-
+                <h1>출력하기</h1>
+                    <ul>
+                        {item.map(items=>(
+                            <li key={items.id}>{items.id}, {items.userId}, {items.userAddress}</li>
+                        ))}
+                    </ul>
             </div>
-        )
-    }
+       
+    )   
+
+    
 
 
     return (
@@ -131,6 +168,12 @@ export const Address = () => {
                     type='button'
                     value="저장하기"
                     onClick={handlesave}
+                    />
+
+                <input 
+                    type='button'
+                    value="전환하기"
+                    onClick={handlebutton}
                     />
             </div>
             <h1>주소 api 사용해보기</h1>
