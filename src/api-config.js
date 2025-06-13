@@ -23,8 +23,9 @@ let backendHost;
 const hostname = window && window.location && window.location.hostname;
 
 //http://localhost:10000/todo
+    //AWS 설정으로 인해 포트 5000번으로 수정
 if(hostname=="localhost"){
-    backendHost = "http://localhost:10000";
+    backendHost = "http://localhost:5000";
 }
 
 export const API_BASE_URL = `${backendHost}`;
