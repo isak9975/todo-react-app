@@ -3,6 +3,8 @@ import { Login } from './Login';
 import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import {Typography,Box} from '@mui/material';
 import { Signup } from './Signup';
+import { SocialLogin } from './SocialLogin';
+import { useEffect, useState } from 'react';
 
 const Copyright = () => {
     return(
@@ -20,6 +22,16 @@ const Copyright = () => {
 }
 
 const AppRouter = () => {
+
+    const [token,setToken] = useState(localStorage.getItem("ACCESS_TOKEN"))
+
+    useEffect(()=>{
+        const storedToken = localStorage.getItem("ACCESS_TOKEN");
+        
+
+    },[])
+
+
     return(
         <div>
             <BrowserRouter>
@@ -27,6 +39,7 @@ const AppRouter = () => {
                     <Route path='/' element={<App />}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path='/signup' element={<Signup/>}/>
+                    <Route path='sociallogin' element={<SocialLogin/>}/>
                 </Routes>
             </BrowserRouter>
             <Box mt={5}>

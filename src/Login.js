@@ -1,5 +1,5 @@
 import {Container,Grid,Typography,TextField,Button} from '@mui/material'
-import { signin } from './service/APIService'
+import { signin, socialLogin } from './service/APIService'
 import { Link } from 'react-router-dom';
 import { NagivationBar } from './Navigater';
 
@@ -25,6 +25,11 @@ export const Login = () => {
         //signin 호출 로직
         //APIService의 signin함수를 사용해 로그인 요청을 보낸다(매개변수 userDTO)
         signin({username : username, password : password})
+    }
+
+    const handleSocialLogin = (provider) => {
+        console.log(provider)
+        socialLogin(provider)
     }
 
 
@@ -81,6 +86,11 @@ export const Login = () => {
                             로그인
                         </Button>
                     </Grid>
+                </Grid>
+                <Grid item xs={12}> 
+                    <Button onClick={()=>handleSocialLogin("github")} fullWidth variant='contained' style={{backgroundColor:'#000'}}>
+                        깃 허브로 로그인하기
+                    </Button>
                 </Grid>
                 <Grid item direction='column'>
                     <Link to="/signup" >

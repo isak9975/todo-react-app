@@ -65,7 +65,7 @@ import { API_BASE_URL } from '../api-config'
             //장점 : if문을 안써도됨. 짧게 쓸수 있음.
             const status = error.response?.status
             if(status === 403){
-                // window.location.href='/login'
+                window.location.href='/login'
             }
             //이 에러가 다음 catch 블록이나 호출 측으로 전달되도록 한다.
             return Promise.reject(error);
@@ -154,6 +154,14 @@ export function signout(){
 
 //계정 생성
 export function signup(userDTO){
-    return call("/auth/signup","POST",userDTO);
+    alert("회원가입 완료")
+
     window.location.href="/login";
+    
+    return call("/auth/signup","POST",userDTO);
+}
+
+//소셜 로그인
+export function socialLogin(provider){
+    window.location.href=API_BASE_URL+"/auth/authorize/"+provider;
 }

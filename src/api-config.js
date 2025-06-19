@@ -24,7 +24,7 @@ const hostname = window && window.location && window.location.hostname;
 
 //http://localhost:10000/todo
     //AWS 설정으로 인해 포트 5000번으로 수정
-if(hostname=="localhost"){
+if(hostname==="localhost"){
     backendHost = "http://localhost:5000";
 }else{
     backendHost = "http://api.springboot-kis.store";
